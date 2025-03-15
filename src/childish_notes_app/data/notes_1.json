@@ -1,0 +1,27 @@
+[
+  {
+    "id": "1",
+    "subject": "My first note title",
+    "content": "Today is 15th March, yesterday we played Holi"
+  },
+  {
+    "id": "2",
+    "subject": "Daily log - 2",
+    "content": "Yesterday we had visited and made plans to goto FlipSide, today we are too tired and gave up."
+  },
+  {
+    "id": "3",
+    "subject": "2nd python project",
+    "content": "it is a notes application"
+  },
+  {
+    "id": "4",
+    "subject": "subject of 4th note",
+    "content": "content of 4th note (goojy)"
+  },
+  {
+    "id": "5",
+    "subject": "subject of fifth note",
+    "content": "puchi puchi"
+  }
+]
