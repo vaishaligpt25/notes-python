@@ -19,17 +19,19 @@ JSON file format
 ]
 
 """
-
+# Class Definition:
 class Note:
     id: str
     subject: str
     content: str
 
+# Constructor Method:
     def __init__(self, id: str, subject: str, content: str) -> None:
         self.id: str = id
         self.subject: str = subject
         self.content: str = content
 
+# Static Method:
     @staticmethod
     def from_json_dict(json_data: Dict[str, str]) -> 'Note':
         return Note(
