@@ -1,6 +1,14 @@
 import json
 import os
-from typing import List, Dict, Union
+from typing import List, Dict
+from uuid import uuid4
+import shortuuid
+
+# Generate a short UUID
+short_id = shortuuid.ShortUUID().random(length=8)
+print(short_id)
+
+
 
 """
 JSON file format
@@ -26,12 +34,15 @@ class Note:
     content: str
 
 # Constructor Method:
-    def __init__(self, id: str, subject: str, content: str) -> None:
+    def __init__(self,
+                 id: str,
+                 subject: str,
+                 content: str) -> None:
         self.id: str = id
         self.subject: str = subject
         self.content: str = content
 
-# Static Method:
+    # Static Method:
     @staticmethod
     def from_json_dict(json_data: Dict[str, str]) -> 'Note':
         return Note(
@@ -59,6 +70,12 @@ class Note:
 TEST_DIR_NAME: str = "data"
 TEST_FILE_NAME: str = "notes_1.json"
 EXIT: str = "exit"
+
+short_id = shortuuid.ShortUUID().random(length=8)
+
+def _generate_id() -> str:
+    short_id = shortuuid.ShortUUID().random(length=8)
+    return str(short_id)
 
 def _create_empty_json_file(file_name: str) -> None:
     open(os.path.join(TEST_DIR_NAME, file_name), "w").close()
@@ -93,7 +110,10 @@ def _input_and_create_new_note(file_name: str) -> None:
     subject: str = input("Enter subject: ")
     if subject == EXIT:
         exit(0)
-    new_note: Note = Note(id=str(len(notes) + 1), subject=subject, content=input("Enter content: "))
+    new_note: Note = Note(
+        id=_generate_id(),
+        subject=subject,
+        content=input("Enter content: "))
 
     notes.append(new_note)
     _write_all_notes(file_name=TEST_FILE_NAME, notes=notes)
@@ -121,7 +141,7 @@ def _delete_note(file_name: str) -> None:
         return
 
     _write_all_notes(file_name=file_name, notes=notes_filtered)
-    print("\nNote deleted successfully!")
+    # print("\nNote deleted successfully!")
 
 def _edit_note(file_name: str) -> None:
     notes: List[Note] = _read_all_notes(file_name=file_name)
@@ -148,7 +168,7 @@ def _edit_note(file_name: str) -> None:
         note_to_edit.subject = new_subject
         note_to_edit.content = new_content
         _write_all_notes(file_name=file_name, notes=notes)
-        print("\nNote edited successfully!")
+        # print("\nNote edited successfully!")
         _show_notes(notes=notes)
 
 
