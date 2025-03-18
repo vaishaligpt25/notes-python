@@ -4,11 +4,6 @@ from typing import List, Dict
 from uuid import uuid4
 import shortuuid
 
-# Generate a short UUID
-short_id = shortuuid.ShortUUID().random(length=8)
-print(short_id)
-
-
 
 """
 JSON file format
@@ -186,14 +181,20 @@ if __name__ == '__main__':
         if choice == 1:
             _show_all_notes(file_name=TEST_FILE_NAME)
         elif choice == 2:
-            _input_and_create_new_note(file_name=TEST_FILE_NAME)
-            print("Note created successfully")
+            if _input_and_create_new_note(file_name=TEST_FILE_NAME):
+                print("Note created successfully")
+            else:
+                print("Failed to create note")
         elif choice == 3:
-            _delete_note(file_name=TEST_FILE_NAME)
-            print("Note deleted successfully")
+            if _delete_note(file_name=TEST_FILE_NAME):
+                print("Note deleted successfully")
+            else:
+                print("Failed to delete note")
         elif choice == 4:
-            _edit_note(file_name=TEST_FILE_NAME)
-            print("Note edited successfully")
+            if _edit_note(file_name=TEST_FILE_NAME):
+                print("Note edited successfully")
+            else:
+                print("Failed to edit note")
         elif choice == 5:
             exit(0)
         else:
