@@ -98,20 +98,44 @@ def _show_all_notes(file_name: str) -> None:
     notes: List[Note] = _read_all_notes(file_name=file_name)
     _show_notes(notes=notes)
 
+def get_next_subject_number() -> int:
+    counter_file = "subject_counter.json"
+
+    def save_counter(number: int) -> None:
+        with open(counter_file, "w") as f:
+            json.dump({"counter": number}, f)
+
+    try:
+        # Read current counter
+        with open(counter_file, "r") as f:
+            data = json.load(f)
+            current_number = data.get("counter", 1)
+
+        save_counter(current_number + 1)
+        return current_number
+
+    except FileNotFoundError:
+        save_counter(2)
+        return 1
+
 def _input_and_create_new_note(file_name: str) -> None:
-    notes: List[Note] = _read_all_notes(file_name=TEST_FILE_NAME)
+    notes: List[Note] = _read_all_notes(file_name= file_name )
 
     # input subject and content from user
-    subject: str = input("Enter subject: ")
+    subject: str = input("Enter subject(or press enter for auto generate): ").strip()
     if subject == EXIT:
         exit(0)
+
+    if not subject:
+        subject = f"Note {get_next_subject_number()}"
     new_note: Note = Note(
         id=_generate_id(),
         subject=subject,
-        content=input("Enter content: "))
+        content=input("Enter content: ").strip()
+    )
 
     notes.append(new_note)
-    _write_all_notes(file_name=TEST_FILE_NAME, notes=notes)
+    _write_all_notes(file_name=file_name, notes=notes)
 
 
 def _delete_note(file_name: str) -> None:
@@ -181,7 +205,7 @@ if __name__ == '__main__':
         if choice == 1:
             _show_all_notes(file_name=TEST_FILE_NAME)
         elif choice == 2:
-            if _input_and_create_new_note(file_name=TEST_FILE_NAME):
+            if _input_and_create_new_note(file_name=TEST_FILE_NAME ):
                 print("Note created successfully")
             else:
                 print("Failed to create note")
