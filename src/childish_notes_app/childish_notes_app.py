@@ -19,7 +19,7 @@ JSON file format
         "subject": "Daily log - 2",
         "content": "Yesterday we had visited and made plans to goto FlipSide, today we are too tired and gave up."
     }
-]
+] 
 
 """
 # Class Definition:
@@ -69,7 +69,6 @@ TEST_FILE_NAME: str = "notes_1.json"
 EXIT: str = "exit"
 
 short_id = shortuuid.ShortUUID().random(length=8)
-
 def _generate_id() -> str:
     short_id = shortuuid.ShortUUID().random(length=8)
     return str(short_id)
@@ -118,7 +117,7 @@ def _write_all_notes(file_name: str, notes: List[Note]) -> None:
         json.dump(json_data, file, indent=2)
         # write json to file with indentation of 2 spaces
 
-def _show_notes(notes: List[Note]) -> None:   # Takes a list of Note objects
+def _show_notes(notes: List[Note]) -> None:   # Take a list of Note objects
     for note in notes:
         print(f"Id: {note.get_id()}")
         print(f"Subject: {note.get_subject()}")
@@ -161,19 +160,19 @@ def _input_and_create_new_note(file_name: str) -> None:
     notes: List[Note] = _read_all_notes(file_name= file_name )
     # input subject and content from user
     subject: str = input("Enter subject(or press enter for auto generate): ").strip()
-    # .strip() removes whitespace from start and end
+    # .strip() removes whitespace(space, Tab, Newline) from start and end
     if subject == EXIT:
         exit(0)
 
     if not subject:   # If subject is empty string
         subject = f"Note {get_next_subject_number()}"
-    # creating new note
+    # create new note
     new_note: Note = Note(
         id=_generate_id(),
         subject=subject,
         content=input("Enter content: ").strip()
     )
-    # saving the note
+    # save note
     notes.append(new_note)  # Add new note to list of notes
     _write_all_notes(file_name=file_name, notes=notes)  # Save all notes to file
 
